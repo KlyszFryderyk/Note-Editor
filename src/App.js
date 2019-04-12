@@ -9,8 +9,21 @@ class App extends React.Component {
 
   state = {
     title: '',
-    description: ''
+    description: '',
+    notes: [{
+      title: 'first',
+      description: 'something'
+    },
+    {
+      title: 'second',
+      description: 'else'
+    },
+    {
+      title: 'third',
+      description: 'and else'
+    }]
   }
+
 
   changeText = (e) => {
     e.preventDefault();
@@ -21,19 +34,26 @@ class App extends React.Component {
 
   submitText = (e) => {
     e.preventDefault();
-    console.log('it works!');
-    const form = {
-      title: this.state.title,
-      description: this.state.description
-     }
     this.setState({
       title: '',
-      description: ''
+      description: '',
+      notes: [...this.state.notes,
+      {
+        title: this.state.title,
+        description: this.state.description
+      }]
     });
-    console.log(this.state.title);
-    console.log(this.state.description);
-
   }
+
+  removeText = (row) => {
+    const newNotes = this.state.notes.filter((note) => {
+      return note !== row
+    });
+    this.setState({
+      notes: newNotes
+    });
+  };
+
 
   render() {
     return (
@@ -50,16 +70,19 @@ class App extends React.Component {
               <Segment inverted>
                 <List divided inverted relaxed>
                   <List.Item>
-                    <List.Content>
-                      <List.Header>{this.state.title}</List.Header>
-                      {this.state.description}
-                    </List.Content>
+                    {this.state.notes.map(note => {
+                      return <List.Content key={note.title}>
+                        <List.Header>{note.title}</List.Header>
+                        {note.description}
+                        <Button onClick={this.removeText.bind(this, note)} type='submit'>Remove a note</Button>
+                      </List.Content>
+                    })}
                   </List.Item>
                 </List>
               </Segment>
             </Grid.Column>
             <Grid.Column width={8}>
-              <Forms submitFn={this.submitText} changeFn={this.changeText} title={this.state.title} description={this.state.description} />
+              <Forms submitFn={this.submitText} clearTitle={this.state.title} clearDescription={this.state.description} changeFn={this.changeText} title={this.state.title} description={this.state.description} />
             </Grid.Column>
           </Grid.Row>
         </Grid>

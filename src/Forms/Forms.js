@@ -3,18 +3,15 @@ import { Grid, Image, TextArea, List, Segment, Button, Form } from 'semantic-ui-
 import { styles } from './Forms.module.scss'
 
 
-const Forms = ({ submitFn, changeFn, title, description }) => (
+const Forms = ({ submitFn, changeFn, clearTitle, clearDescription }) => (
     <Form onSubmit={submitFn}>
         <Form.Field>
             <input placeholder='Title' type="text"
-                name="title"
-                value={title}
-                onChange={e => changeFn(e)} />
+                name="title" onChange={changeFn} required value={clearTitle} />
         </Form.Field>
         <Form.Field>
-            <TextArea placeholder='Tell us more' type="text"
-                name="description"
-                value={description} onChange={e => changeFn(e)} />
+            <TextArea placeholder='Description' type="text"
+                name="description" onChange={changeFn} value={clearDescription} />
         </Form.Field>
         <Button type='submit'>+ Add New Note</Button>
     </Form>
