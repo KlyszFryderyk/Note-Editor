@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Image, TextArea, List, Segment, Button, Form } from 'semantic-ui-react'
 import logo from './logo.png'
-import { styles } from './App.module.scss'
+import styles from './App.module.scss'
 import Forms from './Forms/Forms'
 
 
@@ -35,15 +35,15 @@ class App extends React.Component {
       }]
     }));
     localStorage.setItem("notes", JSON.stringify(this.state.notes));
- }
+  }
 
- componentDidUpdate() {
-   localStorage.setItem("notes", JSON.stringify(this.state.notes));
+  componentDidUpdate() {
+    localStorage.setItem("notes", JSON.stringify(this.state.notes));
 
- }
+  }
   componentDidMount() {
     let notes = localStorage.getItem('notes');
-    if(notes === null){
+    if (notes === null) {
     } else {
       let notes = localStorage.getItem('notes');
       notes = JSON.parse(notes);
@@ -65,7 +65,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Grid >
+        <Grid>
           <Grid.Row>
             <Grid.Column width={8}>
               <Grid>
@@ -78,10 +78,12 @@ class App extends React.Component {
                 <List divided inverted relaxed>
                   <List.Item >
                     {this.state.notes.map(note => {
-                      return <List.Content  key={note.title}>
-                        <List.Header >{note.title}</List.Header>
-                        {note.description}
-                        <Button onClick={this.removeText.bind(this, note)} type='submit'>Remove a note</Button>
+                      return <List.Content className={styles.content} key={note.title}>
+                        <List.Header className={styles.title} >{note.title}</List.Header>
+                        <p className={styles.description}>{note.description}</p>
+                        <List.Item className={styles.remove}>
+                          <Button onClick={this.removeText.bind(this, note)} type='submit'>Remove a note</Button>
+                        </List.Item>
                       </List.Content>
                     })}
                   </List.Item>

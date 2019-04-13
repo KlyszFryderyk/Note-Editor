@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Image, TextArea, List, Segment, Button, Form } from 'semantic-ui-react'
-import { styles } from './Forms.module.scss'
+import styles from './Forms.module.scss'
 
 
 const Forms = ({ submitFn, changeFn, clearTitle, clearDescription }) => (
