@@ -25,24 +25,38 @@ class App extends React.Component {
   }
 
 
+
   changeText = (e) => {
     e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
     });
+
   }
 
   submitText = (e) => {
     e.preventDefault();
-    this.setState({
+    this.setState(prevState => ({
       title: '',
       description: '',
-      notes: [...this.state.notes,
+      notes: [...prevState.notes,
       {
         title: this.state.title,
         description: this.state.description
       }]
-    });
+    }));
+    localStorage.setItem("notes", JSON.stringify(this.state.notes));
+ }
+
+ componentDidUpdate() {
+   localStorage.setItem("notes", JSON.stringify(this.state.notes));
+
+ }
+  componentDidMount() {
+    let notes = localStorage.getItem('notes');
+    notes = JSON.parse(notes);
+    this.setState({ notes });
+
   }
 
   removeText = (row) => {
@@ -52,6 +66,7 @@ class App extends React.Component {
     this.setState({
       notes: newNotes
     });
+    localStorage.setItem("notes", JSON.stringify(newNotes));
   };
 
 
