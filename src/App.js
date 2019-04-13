@@ -10,18 +10,7 @@ class App extends React.Component {
   state = {
     title: '',
     description: '',
-    notes: [{
-      title: 'first',
-      description: 'something'
-    },
-    {
-      title: 'second',
-      description: 'else'
-    },
-    {
-      title: 'third',
-      description: 'and else'
-    }]
+    notes: []
   }
 
 
@@ -54,9 +43,12 @@ class App extends React.Component {
  }
   componentDidMount() {
     let notes = localStorage.getItem('notes');
-    notes = JSON.parse(notes);
-    this.setState({ notes });
-
+    if(notes === null){
+    } else {
+      let notes = localStorage.getItem('notes');
+      notes = JSON.parse(notes);
+      this.setState({ notes });
+    }
   }
 
   removeText = (row) => {
@@ -73,7 +65,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Grid>
+        <Grid >
           <Grid.Row>
             <Grid.Column width={8}>
               <Grid>
@@ -84,10 +76,10 @@ class App extends React.Component {
 
               <Segment inverted>
                 <List divided inverted relaxed>
-                  <List.Item>
+                  <List.Item >
                     {this.state.notes.map(note => {
-                      return <List.Content key={note.title}>
-                        <List.Header>{note.title}</List.Header>
+                      return <List.Content  key={note.title}>
+                        <List.Header >{note.title}</List.Header>
                         {note.description}
                         <Button onClick={this.removeText.bind(this, note)} type='submit'>Remove a note</Button>
                       </List.Content>
